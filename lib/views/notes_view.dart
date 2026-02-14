@@ -14,22 +14,18 @@ class NotesView extends StatelessWidget {
         backgroundColor: kPrimaryColor,
         shape: CircleBorder(),
         onPressed: () {
-          showModelButtomSheet(context);
+          showModalBottomSheet(
+            isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(28),
+            ),
+            context: context,
+            builder: (context) => AddNoteBottomSheet(),
+          );
         },
         child: Icon(Icons.add, color: Colors.black, size: 24),
       ),
       body: NotesViewBody(),
-    );
-  }
-
-  void showModelButtomSheet(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(28),
-      ),
-      context: context,
-      builder: (context) => AddNoteBottomSheet(),
     );
   }
 }

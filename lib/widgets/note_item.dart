@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
+
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
 
 class NoteItem extends StatelessWidget {
-  const NoteItem({super.key});
+  const NoteItem({super.key, required this.note});
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class NoteItem extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            color: Colors.yellowAccent,
+            color: Color(note.color),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -27,25 +32,28 @@ class NoteItem extends StatelessWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  'Flutter Tips',
+                  note.title,
                   style: TextStyle(fontSize: 35, color: Colors.black),
                 ),
 
                 subtitle: Padding(
                   padding: const EdgeInsets.only(bottom: 12, top: 25),
-                  child: const Text(
-                    'Build your carrer with ezat gerges',
+                  child: Text(
+                    note.subTitle,
                     style: TextStyle(fontSize: 23, color: Colors.black54),
                   ),
                 ),
 
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    note.delete();
+                    context.read<NotesCubit>().fetchAllNotes();
+                  },
                   icon: Icon(Icons.delete, color: Colors.black, size: 30),
                 ),
               ),
               Text(
-                'may21 , 2022',
+                note.date,
                 style: TextStyle(color: Colors.black, fontSize: 17),
               ),
             ],
