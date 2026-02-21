@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_state.dart';
 import 'package:notes_app/models/note_model.dart';
+import 'color_item_list_view.dart';
 import 'custom_buttom.dart';
 import 'custom_text_field.dart';
 
@@ -44,7 +45,10 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 subTitle = value;
               },
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 35),
+            ColorItemListView(),
+            SizedBox(height: 35),
+
             BlocBuilder<AddNoteCubit, AddNoteState>(
               builder: (context, state) {
                 return Padding(
@@ -54,14 +58,11 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
-                        DateTime currentDate = DateTime.now();
-                        String formatDate = DateFormat.yMd().add_jm().format(
-                          currentDate,
-                        );
+
                         var note = NoteModel(
                           title: title!,
                           subTitle: subTitle!,
-                          date: formatDate,
+                          date: currentDateTime(),
                           color: Colors.blue.toARGB32(),
                         );
                         BlocProvider.of<AddNoteCubit>(context).addNote(note);
@@ -78,5 +79,11 @@ class _AddNoteFormState extends State<AddNoteForm> {
         ),
       ),
     );
+  }
+
+  String currentDateTime() {
+    DateTime currentDate = DateTime.now();
+    String formatDate = DateFormat.yMd().add_jm().format(currentDate);
+    return formatDate;
   }
 }
