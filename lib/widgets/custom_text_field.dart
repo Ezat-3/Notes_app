@@ -7,10 +7,12 @@ class CustomTextField extends StatelessWidget {
     this.maxLine = 1,
     required this.title,
     this.onSaved,
+    this.onChange,
   });
   final int maxLine;
   final String title;
   final void Function(String?)? onSaved;
+  final void Function(String?)? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class CustomTextField extends StatelessWidget {
           return null;
         }
       },
+      onChanged: onChange,
       onSaved: onSaved,
       maxLines: maxLine,
       cursorColor: kPrimaryColor,
